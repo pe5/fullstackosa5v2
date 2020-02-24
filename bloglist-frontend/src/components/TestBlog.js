@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import BlogService from '../services/blogs'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, updateBlogs }) => {
-  const blogStyle ={
+const TestBlog = ({ blog, updateBlogs }) => {
+  const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
     border: 'solid',
@@ -11,11 +11,6 @@ const Blog = ({ blog, updateBlogs }) => {
     marginBottom: 5
   }
   const [visible, setVisible] = useState(false)
-  const loggedUser = JSON.parse(window.localStorage.getItem('loggedBlogappUser'))
-  const blogUser = JSON.stringify(blog.user.username)
-  const loggedUsername = JSON.stringify(loggedUser.username)
-  console.log(blog.user)
-  console.log(blogUser)
 
   const handleClick = (event) => {
     event.preventDefault()
@@ -45,28 +40,14 @@ const Blog = ({ blog, updateBlogs }) => {
     }
   }
 
-  if (visible && blogUser !== loggedUsername) {
-    console.log(blogUser)
-    console.log(loggedUsername)
-    return (
-      <div style={blogStyle} className='notSame'>
-        <div>
-          {blog.title} {blog.author} <button onClick={handleClick}>hide</button>
-          <br />
-          {blog.url} <br />
-                    likes {blog.likes} <button id='like' onClick={handleLike}>like</button> <br />
-          {blog.user.name}
-        </div>
-      </div>
-    )
-  } else if (visible && blogUser === loggedUsername) {
+  if (visible) {
     return (
       <div style={blogStyle}>
         <div>
           {blog.title} {blog.author} <button onClick={handleClick}>hide</button>
           <br />
           {blog.url} <br />
-                likes {blog.likes} <button id='like' onClick={handleLike}>like</button> <br />
+                likes {blog.likes} <button onClick={handleLike}>addlike</button> <br />
           {blog.user.name} <br />
           <button onClick={handleRemove}>remove</button>
         </div>
@@ -81,9 +62,4 @@ const Blog = ({ blog, updateBlogs }) => {
 
 }
 
-Blog.propTypes = {
-  blog: PropTypes.object.isRequired,
-  updateBlogs: PropTypes.func.isRequired
-}
-
-export default Blog
+export default TestBlog

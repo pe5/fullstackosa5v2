@@ -5,6 +5,10 @@ const BlogForm = ({ createBlog }) => {
   const [newTitle, setNewTitle] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
   const [newUrl, setNewUrl] = useState('')
+  const loggedUser = JSON.parse(window.localStorage.getItem('loggedBlogappUser'))
+  const loggedUsername = JSON.stringify(loggedUser.username)
+  const loggedName = JSON.stringify(loggedUser.name)
+  console.log(loggedUser)
 
   const handleTitleChange = (event) => {
     setNewTitle(event.target.value)
@@ -24,29 +28,38 @@ const BlogForm = ({ createBlog }) => {
       title: newTitle,
       author: newAuthor,
       url: newUrl,
-      likes: 0
+      likes: 0,
+      user: {
+        username: loggedUsername,
+        name: loggedName
+      }
     })
     setNewTitle('')
     setNewAuthor('')
     setNewUrl('')
   }
 
+
+
   return (
     <div>
       <form onSubmit={addBlog}>
       title: <input
+          id='title'
           value={newTitle}
           onChange={handleTitleChange}
         /><br />
       author: <input
+          id='author'
           value={newAuthor}
           onChange={handleAuthorChange}
         /><br />
       url: <input
+          id='url'
           value={newUrl}
           onChange={handleUrlChange}
         /><br />
-        <button type="submit">save</button>
+        <button id='save' type="submit">save</button>
       </form>
     </div>
   )}

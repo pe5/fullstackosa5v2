@@ -34,20 +34,35 @@ const App = () => {
     setBlogs(updatedBlogs)
   }
 
-  const addBlog = async (blogObject) => {
+  // const addBlog = async (blogObject) => {
+
+  //   blogFormRef.current.toggleVisibility()
+  //   const testi = await blogService.create(blogObject)
+  //   setBlogs(blogs.concat(testi))
+  //   console.log(testi.user)
+  //   setErrorMessage(`A new blog ${blogObject.title}`)
+  //   setTimeout(() => {
+  //     setErrorMessage(null)
+  //   }, 5000)
+
+
+  // }
+
+  const addBlog = (blogObject) => {
 
     blogFormRef.current.toggleVisibility()
-    const testi = await blogService.create(blogObject)
-    setBlogs(blogs.concat(testi))
-    setErrorMessage(`A new blog ${blogObject.title}`)
-    setTimeout(() => {
-      setErrorMessage(null)
-    }, 5000)
+    blogService.create(blogObject)
+      .then(returnedBlog => {
+        setBlogs(blogs.concat(returnedBlog))
+        setErrorMessage(`A new blog ${blogObject.title}`)
+        setTimeout(() => {
+        setErrorMessage(null)
+        }, 5000)
+      })
+    
 
 
   }
-
-
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -90,6 +105,7 @@ const App = () => {
         <div>
           username
           <input
+            id='username'
             type="text"
             value={username}
             name="Username"
@@ -99,13 +115,14 @@ const App = () => {
         <div>
           password
           <input
+            id='password'
             type="password"
             value={password}
             name="Password"
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
-        <button type="submit">login</button>
+        <button id='login-button' type="submit">login</button>
       </form>
     </div>
   )
